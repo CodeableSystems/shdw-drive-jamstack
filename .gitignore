@@ -1,0 +1,7 @@
+node_modules/
+shdw*json
+.env
+wallets/*.json
+build
+.DS_STORE
+dist/*.html
