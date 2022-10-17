@@ -16,11 +16,11 @@ h1 {
   font-size: 2rem;
   margin: 0 0 0.5rem 0;
 }
-a{
+a {
   color: currentColor;
 }
-a:link{
-  text-decoration:underline;
+a:link {
+  text-decoration: underline;
 }
 a:visited {
   color: currentColor;

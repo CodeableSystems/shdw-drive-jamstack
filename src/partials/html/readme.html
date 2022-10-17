@@ -1,0 +1,31 @@
+<h1 id="decentralized-jamstack-app">Decentralized jamstack app</h1>
+<p>Pre-requisites:</p>
+<ul>
+<li>The shdw-drive binary installed (install with <code>npm i -g @shadow-drive/cli</code>)</li>
+<li>A Solana wallet with a little SOL (0.02 is enough) and SHDW token (1 is enough)</li>
+</ul>
+<ol start="0">
+<li><p>Install with yarn or npm</p>
+</li>
+<li><p>Create a storage account on SHADOW DRIVE
+<code>shdw-drive create-storage-account -n jamstack -kp yourwallet.json -s 1mb</code>
+(replace <code>jamstack</code> with any name you want)</p>
+</li>
+<li><p>Put the storage account you created in your <code>.env</code> file
+<code>DRIVE=storageaccount</code></p>
+</li>
+<li><p>Put the wallet account file in your <code>.env</code> file
+<code>WALLETFILE=walletfile location</code></p>
+</li>
+<li><p>Build your website 
+<code>npx gulp build</code> (or <code>yarn build</code>)</p>
+</li>
+<li><p>Upload
+<code>npx gulp upload</code> (or <code>yarn upload</code>)
+this command will upload any new files as well as replaced the edited ones. Be sure to build first.</p>
+</li>
+<li><p>Done
+you can access your website at <code>https://shdw-drive.genesysgo.net/&lt;storageaccount&gt;/index.html</code> or you can
+go to sdrive.app and claim a subdomain such as <code>jamstack.shadoweb.app</code> on the <code>shadoweb.app</code> domain.</p>
+</li>
+</ol>

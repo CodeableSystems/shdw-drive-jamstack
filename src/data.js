@@ -1,4 +1,4 @@
 export default {
-    title: "The Decentralized Jamstack",
-    year: new Date().getFullYear()
+  title: "The Decentralized Jamstack",
+  year: new Date().getFullYear(),
 }
