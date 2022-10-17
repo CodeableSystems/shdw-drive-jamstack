@@ -10,6 +10,7 @@
   "scripts": {
     "prebuild": "rimraf build",
     "upload": "gulp upload",
+    "serve": "npx http-server build",
     "build": "gulp build",
     "watch": "gulp default"
   },

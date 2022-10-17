@@ -37,7 +37,7 @@ gulp.task("watch", function () {
   gulp.watch("./src/data.js", { cwd: "./" }, gulp.series("handlebars"))
   gulp.watch("./src/**/*.hbs", { cwd: "./" }, gulp.series("handlebars"))
   gulp.watch("./src/styles/**/*.css", { cwd: "./" }, gulp.series("styles"))
-  gulp.watch("./src/blogposts/**/*.md", { cwd: "./" }, gulp.series("markdown"))
+  gulp.watch("./content/**/*.md", { cwd: "./" }, gulp.series("markdown"))
 })
 
 gulp.task("upload-new", function () {
@@ -144,7 +144,7 @@ gulp.task("styles", function () {
 gulp.task("markdown", function () {
   return new Promise(function (resolve) {
     gulp
-      .src(["./src/blogposts/**/*.md"])
+      .src(["./content/**/*.md"])
       .pipe(markdown())
       .pipe(gulp.dest("./src/partials/html"))
     resolve()
