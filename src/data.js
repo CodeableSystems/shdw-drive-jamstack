@@ -1,4 +1,4 @@
-module.exports = {
-  title: "The Decentralized Jamstack",
-  year: new Date().getFullYear(),
-};
+export default {
+    title: "The Decentralized Jamstack",
+    year: new Date().getFullYear()
+}

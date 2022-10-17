@@ -1,8 +1,6 @@
-var through = require("through2");
-var debug = require("debug")("using");
-module.exports = function () {
-  return through.obj(function (file, encoding, callback) {
-    //debug("compiling",Object.keys(file.stat));
+import through from 'through2';    
+export default function() {
+  return through.obj(function(file, encoding, callback) {
     callback(null, file);
   });
 };

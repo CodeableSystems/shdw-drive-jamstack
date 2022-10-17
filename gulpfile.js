@@ -1,17 +1,18 @@
-const gulp = require("gulp");
-const handlebars = require("gulp-compile-handlebars");
-const rename = require("gulp-rename");
-const using = require("./using");
-const templateData = require("./src/data");
-const gulpIgnore = require("gulp-ignore");
-const flatten = require("gulp-flatten");
-const shell = require("gulp-shell");
-const axios = require("axios");
-const Fs = require("@supercharge/filesystem");
-const through = require("through2");
+import gulp from "gulp"
+import handlebars from "gulp-compile-handlebars"
+import rename from "gulp-rename"
+import using from "./using.js"	
+import templateData from "./src/data.js"
+import gulpIgnore from "gulp-ignore"
+import flatten from "gulp-flatten"
+import shell from "gulp-shell"
+import axios from "axios"
+import Fs from "@supercharge/fs"
+import through from "through2"
+import markdown from "gulp-markdown"
 
-const dotenv = require("dotenv");
-dotenv.config();
+import dotenv from "dotenv"
+dotenv.config()
 
 async function getListObjects(account) {
   try {
@@ -20,23 +21,24 @@ async function getListObjects(account) {
       {
         storageAccount: account,
       }
-    );
+    )
     if (resp.status === 200) {
-      return await resp.data;
+      return await resp.data
     } else {
-      return { files: [] };
+      return { files: [] }
     }
   } catch (e) {
-    return { files: [] };
+    return { files: [] }
   }
 }
 
 gulp.task("watch", function () {
-  gulp.watch("./assets/**/*", { cwd: "./" }, gulp.series("assets"));
-  gulp.watch("./src/data.js", { cwd: "./" }, gulp.series("handlebars"));
-  gulp.watch("./src/**/*.hbs", { cwd: "./" }, gulp.series("handlebars"));
-  gulp.watch("./src/styles/**/*.css", { cwd: "./" }, gulp.series("styles"));
-});
+  gulp.watch("./assets/**/*", { cwd: "./" }, gulp.series("assets"))
+  gulp.watch("./src/data.js", { cwd: "./" }, gulp.series("handlebars"))
+  gulp.watch("./src/**/*.hbs", { cwd: "./" }, gulp.series("handlebars"))
+  gulp.watch("./src/styles/**/*.css", { cwd: "./" }, gulp.series("styles"))
+  gulp.watch("./src/blogposts/**/*.md", { cwd: "./" }, gulp.series("markdown"))
+})
 
 gulp.task("upload-new", function () {
   return new Promise(function (resolve) {
@@ -98,6 +100,57 @@ gulp.task("assets", function () {
   });
 });
 
+gulp.task("upload-changed", async function () {
+  let remoteFiles = await getListObjects(process.env.DRIVE)
+  return new Promise(function (resolve) {
+    gulp
+      .src(["build/**/*"], { read: false })
+      .pipe(using())
+      .pipe(
+        through.obj(async (chunk, enc, cb) => {
+          const stats = await Fs.stat(chunk.path)
+          let uploadedFile = remoteFiles.files.filter(
+            (f) => f.file_name === chunk.relative
+          )
+          if (uploadedFile && stats?.size && uploadedFile[0].size != stats.size) {
+            cb(null, chunk)
+          } else {
+            cb(null, null)
+          }
+        })
+      )
+      .pipe(
+        shell(
+          [
+            `BROWSER="" shdw-drive edit-file -kp ${process.env.WALLETFILE} -f build/<%= file.relative %> -u https://shdw-drive.genesysgo.net/${process.env.DRIVE}/<%= file.relative %>`,
+          ],
+          { ignoreErrors: true }
+        )
+      )
+    resolve()
+  })
+})
+gulp.task("styles", function () {
+  return new Promise(function (resolve) {
+    gulp.src(["./src/styles/**/*.css"]).pipe(using()).pipe(gulp.dest("build"))
+    resolve()
+  })
+})
+gulp.task("markdown", function () {
+  return new Promise(function (resolve) {
+    gulp.src(["./src/blogposts/**/*.md"]).pipe(markdown()).pipe(gulp.dest("build"))
+    resolve()
+  })
+})
+
+
+gulp.task("assets", function () {
+  return new Promise(function (resolve) {
+    gulp.src(["./assets/**/*"]).pipe(using()).pipe(gulp.dest("build"))
+    resolve()
+  })
+})
+
 gulp.task("handlebars", function () {
   return new Promise(function (resolve) {
     gulp
@@ -117,13 +170,13 @@ gulp.task("handlebars", function () {
       )
       .pipe(rename({ extname: ".html" }))
       .pipe(flatten())
-      .pipe(gulp.dest("build", { flatten: true }));
-    resolve();
-  });
-});
+      .pipe(gulp.dest("build", { flatten: true }))
+    resolve()
+  })
+})
 gulp.task(
   "build",
-  gulp.parallel(["handlebars", "styles", "assets"]),
+  gulp.parallel(["handlebars", "styles", "assets","markdown"]),
   function (done) {
     done();
   }
@@ -139,7 +192,7 @@ gulp.task(
 
 gulp.task(
   "default",
-  gulp.parallel(["handlebars", "styles", "assets", "watch"]),
+  gulp.parallel(["handlebars", "styles", "assets", "markdown","watch"]),
   function (done) {
     done();
   }
