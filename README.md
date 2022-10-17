@@ -4,6 +4,8 @@ Pre-requisites:
 * The shdw-drive binary installed (install with `npm i -g @shadow-drive/cli`)
 * A Solana wallet with a little SOL (0.02 is enough) and SHDW token (1 is enough)
 
+0. Install with yarn or npm
+
 1. Create a storage account on SHADOW DRIVE
 `shdw-drive create-storage-account -n jamstack -kp yourwallet.json -s 1mb`
 (replace `jamstack` with any name you want)
@@ -15,8 +17,11 @@ Pre-requisites:
 `WALLETFILE=walletfile location`
 
 4. Build your website 
-`yarn build`
+`npx gulp build`
 
 5. Upload
-`yarn upload`
+`npx gulp upload`
 
+6. Done
+you can access your website at `https://shdw-drive.genesysgo.net/<storageaccount>/index.html` or you can
+go to sdrive.app and claim a subdomain such as `jamstack.shadoweb.app` on the `shadoweb.app` domain.
