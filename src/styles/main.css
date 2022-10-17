@@ -1,15 +1,15 @@
-:root{
-    background: rgba(15,15,15,.9);   
-    --height: 1rem;
+:root {
+  background: rgba(15, 15, 15, 0.9);
+  --height: 1rem;
 }
-html,body{
-    box-sizing: border-box;
-    margin:0;
-    height: 100%;
+html,
+body {
+  box-sizing: border-box;
+  margin: 0;
+  height: 100%;
 }
-div.wrapper{
-    min-height: 100%;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
+div.wrapper {
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 }
-
