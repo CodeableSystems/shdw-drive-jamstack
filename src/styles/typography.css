@@ -16,18 +16,14 @@ h1 {
   font-size: 2rem;
   margin: 0 0 0.5rem 0;
 }
-a {
-  color: currentColor;
-}
-a:link {
-  text-decoration: underline;
-}
+a,
+a:link,
 a:visited {
+  text-decoration: underline;
   color: currentColor;
-  text-decoration: none;
 }
 a:hover,
 a:link:hover,
 a:visited:hover {
-  text-decoration: underline;
+  font-weight: bold;
 }

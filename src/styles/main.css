@@ -13,3 +13,7 @@ div.wrapper {
   display: grid;
   grid-template-rows: auto 1fr auto;
 }
+article.content {
+ padding: 0 5rem;
+}
+ 
