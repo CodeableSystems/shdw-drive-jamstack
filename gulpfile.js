@@ -58,7 +58,6 @@ gulp.task('upload-changed', async function () {
 				cb(null, null)
 			}
 			}))
-		//.pipe(shell([`echo <%= file.relative %> <%= file.stat.size %>`]))
 		.pipe(shell([`BROWSER="" shdw-drive edit-file -kp ${process.env.WALLETFILE} -f build/<%= file.relative %> -u https://shdw-drive.genesysgo.net/${process.env.DRIVE}/<%= file.relative %>`],{ignoreErrors:true}))
 		resolve()
 	});
