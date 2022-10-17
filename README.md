@@ -21,7 +21,9 @@ Pre-requisites:
 
 5. Upload
 `npx gulp upload`
+this command will upload any new files as well as replaced the edited ones. Be sure to build first.
 
 6. Done
 you can access your website at `https://shdw-drive.genesysgo.net/<storageaccount>/index.html` or you can
 go to sdrive.app and claim a subdomain such as `jamstack.shadoweb.app` on the `shadoweb.app` domain.
+

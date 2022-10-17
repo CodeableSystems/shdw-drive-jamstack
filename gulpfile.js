@@ -38,7 +38,7 @@ gulp.task("watch", function () {
   gulp.watch("./src/styles/**/*.css", { cwd: "./" }, gulp.series("styles"));
 });
 
-gulp.task("upload", function () {
+gulp.task("upload-new", function () {
   return new Promise(function (resolve) {
     gulp
       .src(["build"], { read: false })
@@ -67,7 +67,7 @@ gulp.task("upload-changed", async function () {
           let uploadedFile = remoteFiles.files.filter(
             (f) => f.file_name === chunk.relative
           );
-          if (uploadedFile[0].size != stats.size) {
+          if (uploadedFile && uploadedFile[0].size != stats.size) {
             cb(null, chunk);
           } else {
             cb(null, null);
@@ -130,8 +130,8 @@ gulp.task(
 );
 
 gulp.task(
-  "upload-and-modify",
-  gulp.series(["upload", "upload-changed"]),
+  "upload",
+  gulp.series(["upload-new", "upload-changed"]),
   function (done) {
     done();
   }
